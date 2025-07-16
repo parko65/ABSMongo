@@ -1,6 +1,7 @@
 ﻿using ABSMongo.Extensions;
 using ABSMongo.ServiceTimers;
 using Contracts;
+using Entities.ConfigurationOptions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
@@ -38,6 +39,11 @@ namespace ABSMongo
             builder.Services.AddAutoMapper(typeof(MauiProgram));
 
             builder.Services.AddSingleton<BackgroundTask>(sp => new BackgroundTask(TimeSpan.FromMilliseconds(1000)));
+
+            builder.Services.AddOptions<PLCConfigurationOptions>()
+                .BindConfiguration("PLCConfiguration")
+                .Validate(options =>
+                !string.IsNullOrWhiteSpace(options.IPAddress), "PLC IP Address is required");
 
 #if DEBUG
             var env = "Development";
