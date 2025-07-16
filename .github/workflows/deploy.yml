@@ -48,7 +48,7 @@ jobs:
       id: extractVersion
       shell: pwsh
       run: |
-        $xml = [Xml] (Get-Content ./ABSHybridX/ABSHybridX.csproj)
+        $xml = [Xml] (Get-Content ./ABSMongo/ABSMongo.csproj)
         [string] $version = [Version] $xml.Project.PropertyGroup.ApplicationDisplayVersion
         echo "version=$($version)" >> $env:GITHUB_OUTPUT
 
