@@ -6,7 +6,7 @@
 	<MainPackage
 		Name="Hesler.Automation.ABSMongo"
 		Publisher="CN=DP Software, O=Hesler Automation"
-		Version="1.0.6.0"
+		Version="1.0.7.0"
 		ProcessorArchitecture="x64"
 		Uri="https://github.com/parko65/ABSMongo/releases/latest/download/AutoUpdate.msix"/>
 	<UpdateSettings>
