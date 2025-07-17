@@ -24,6 +24,12 @@ public static class ServiceExtensions
         builder.Configuration.AddConfiguration(config);
     }
 
+    public static void ConfigureAppSettings(this MauiAppBuilder builder)
+    {
+        var settingsPath = @"C:\Applications\ABSMongo";
+        builder.Configuration.AddJsonFile(Path.Combine(settingsPath, "appconfiguration.json"), optional: false, reloadOnChange: true);
+    }
+
     public static void ConfigureRepositoryManager(this IServiceCollection services) =>
         services.AddSingleton<IRepositoryManager, RepositoryManager>();
 

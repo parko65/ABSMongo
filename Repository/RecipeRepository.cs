@@ -18,9 +18,6 @@ public class RecipeRepository : RepositoryBase<Recipe>, IRecipeRepository
 
     public async Task CreateRecipeAsync(Recipe recipe)
     {
-        if (recipe == null)
-            throw new ArgumentNullException(nameof(recipe));
-
         await CreateAsync(recipe);
     }
 }

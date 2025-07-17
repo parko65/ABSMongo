@@ -15,6 +15,9 @@ public class Recipe
     [BsonElement("description")]
     public string? Description { get; set; }
 
-    [BsonElement("materials")]
-    public Material[]? Materials { get; set; }
+    [BsonElement("version")]
+    public int VersionNumber { get; set; }
+
+    [BsonElement("hotbins")]
+    public HotAggregateBin[]? HotBins { get; set; }
 }

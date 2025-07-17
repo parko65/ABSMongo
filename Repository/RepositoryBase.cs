@@ -24,7 +24,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 
     public async Task<T> FindByIdAsync(string id)
     {
-        var objectId = ObjectId.Parse(id);
+        var objectId = ObjectId.Parse(id);        
 
         var filter = Builders<T>.Filter.Eq("_id", objectId);
 

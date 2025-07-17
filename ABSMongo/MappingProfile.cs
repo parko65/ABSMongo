@@ -15,5 +15,7 @@ public class MappingProfile : Profile
         CreateMap<RecipeForCreationDto, Recipe>();
 
         CreateMap<MaterialForCreationDto, Material>();
+
+        CreateMap<HotAggregateBinForCreationDto, HotAggregateBin>();
     }
 }

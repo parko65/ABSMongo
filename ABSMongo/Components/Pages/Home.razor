@@ -14,22 +14,17 @@
 
 <FluentButton OnClick="CreateRecipe">Create Recipe</FluentButton>
 
-<FluentNumberField @bind-Value=_materialForCreation.MaterialNumber Placeholder="Material Number"></FluentNumberField>
-<FluentTextField @bind-Value=_materialForCreation.Name Placeholder="Material Name"></FluentTextField>
-
-<FluentButton OnClick="AddMaterialsToRecipe">Add Material</FluentButton>
+<p>@_currentDirectory</p>
 
 @code {
     [Inject]
     public IServiceManager Service { get; set; } = default!;
 
-    private IQueryable<RecipeDto>? _recipes;
-
-    private MaterialForCreationDto _materialForCreation = new();
-
-    private MaterialForCreationDto[] _materialsForCreation = [];
+    private IQueryable<RecipeDto>? _recipes;    
 
     private RecipeForCreationDto recipeForCreation = new();
+
+    private string? _currentDirectory;
 
     protected override async Task OnInitializedAsync()
     {
@@ -39,30 +34,24 @@
     private async Task CreateRecipe()
     {
         // Add the materials to the recipe for creation
-        recipeForCreation.Materials = _materialsForCreation;
+        
         await Service.RecipeService.CreateRecipeAsync(recipeForCreation);        
         await LoadRecipesAsync(); // Reload recipes to reflect the new one
         ClearData();
-    }
-
-    private void AddMaterialsToRecipe()
-    {
-        //Add the material the materials collection
-        _materialsForCreation = _materialsForCreation.Append(_materialForCreation).ToArray();
-        _materialForCreation = new MaterialForCreationDto(); // Reset after adding
-    }
+    }    
 
     private async Task LoadRecipesAsync()
     {
         var recipes = await Service.RecipeService.GetRecipesAsync();
 
         _recipes = recipes.AsQueryable();
+
+        var dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        _currentDirectory = dir ?? "Unknown directory";
     }
 
     private void ClearData()
-    {        
-        _materialForCreation = new MaterialForCreationDto();
-        _materialsForCreation = [];
+    {
         recipeForCreation = new RecipeForCreationDto();
     }
 }

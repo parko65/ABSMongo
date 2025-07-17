@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.ConfigurationOptions;
 using Entities.Exceptions;
 using Entities.Models;
+using Microsoft.Extensions.Options;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -11,12 +13,14 @@ internal sealed class RecipeService : IRecipeService
     private readonly IRepositoryManager _repository;
     private readonly ILoggerManager _logger;
     private readonly IMapper _mapper;
+    private readonly IOptionsMonitor<StorageConfigurationOptions> _storageConfigurationOptions;
 
-    public RecipeService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
+    public RecipeService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper, IOptionsMonitor<StorageConfigurationOptions> storageConfigurationOptions)
     {
         _repository = repository;
         _mapper = mapper;
         _logger = logger;
+        _storageConfigurationOptions = storageConfigurationOptions;
     }
 
     public async Task<IEnumerable<RecipeDto>> GetRecipesAsync()
@@ -43,6 +47,18 @@ internal sealed class RecipeService : IRecipeService
     public async Task<RecipeDto> CreateRecipeAsync(RecipeForCreationDto recipeForCreation)
     {
         var recipe = _mapper.Map<Recipe>(recipeForCreation);
+
+        // Add 8 hotbins to the recipe
+        if (recipe.HotBins == null || recipe.HotBins.Length < _storageConfigurationOptions.CurrentValue.MaxBinCount)
+        {
+            recipe.HotBins = new HotAggregateBin[_storageConfigurationOptions.CurrentValue.MaxBinCount];
+            for (int i = 0; i < _storageConfigurationOptions.CurrentValue.MaxBinCount; i++)
+            {
+                recipe.HotBins[i] = new HotAggregateBin() { Name = $"Bin {i + 1}", Take = 0 };
+            }
+        }
+
+        recipe.VersionNumber = 1; // Set initial version number
 
         await _repository.Recipe.CreateRecipeAsync(recipe);
         await _repository.SaveAsync();

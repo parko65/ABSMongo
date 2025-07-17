@@ -31,6 +31,7 @@ namespace ABSMongo
 
             builder.Services.ConfigureLoggerService();
             builder.SetupConfiguration();
+            builder.ConfigureAppSettings();
             builder.Services.ConfigureRepositoryManager();
             builder.Services.ConfigureServiceManager();
 
@@ -44,6 +45,9 @@ namespace ABSMongo
                 .BindConfiguration("PLCConfiguration")
                 .Validate(options =>
                 !string.IsNullOrWhiteSpace(options.IPAddress), "PLC IP Address is required");
+
+            builder.Services.AddOptions<StorageConfigurationOptions>()
+                .BindConfiguration("StorageConfiguration");            
 
 #if DEBUG
             var env = "Development";
