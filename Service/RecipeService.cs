@@ -48,13 +48,22 @@ internal sealed class RecipeService : IRecipeService
     {
         var recipe = _mapper.Map<Recipe>(recipeForCreation);
 
-        // Add 8 hotbins to the recipe
+        // Add hotbins to the recipe
         if (recipe.HotBins == null || recipe.HotBins.Length < _storageConfigurationOptions.CurrentValue.MaxBinCount)
         {
             recipe.HotBins = new HotAggregateBin[_storageConfigurationOptions.CurrentValue.MaxBinCount];
             for (int i = 0; i < _storageConfigurationOptions.CurrentValue.MaxBinCount; i++)
             {
                 recipe.HotBins[i] = new HotAggregateBin() { Name = $"Bin {i + 1}", Take = 0 };
+            }
+        }
+
+        if (recipe.BitumenTanks == null || recipe.BitumenTanks.Length < _storageConfigurationOptions.CurrentValue.MaxBinCount)
+        {
+            recipe.BitumenTanks = new BitumenTank[_storageConfigurationOptions.CurrentValue.MaxBinCount];
+            for (int i = 0; i < _storageConfigurationOptions.CurrentValue.MaxBinCount; i++)
+            {
+                recipe.BitumenTanks[i] = new BitumenTank() { Name = $"Tank {i + 1}", Take = 0 };
             }
         }
 

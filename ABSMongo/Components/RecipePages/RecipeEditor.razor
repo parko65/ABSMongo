@@ -8,10 +8,22 @@
 </FluentGrid>
 <FluentGrid AdaptiveRendering="true">
     <FluentGridItem xs="9">
-        <p>Left panel</p>
+        <FluentCard>
+            <FluentLabel Typo="Typography.Header">Recipe info</FluentLabel>
+            <FluentStack Orientation="Orientation.Vertical" Style="margin-top: 12px;">
+                <FluentTextField @bind-Value="RecipeForCreation.Name" Label="Recipe Name" Placeholder="Enter recipe name" />
+                <FluentTextField @bind-Value="RecipeForCreation.Description" Label="Description" Placeholder="Enter recipe description" />
+                <FluentButton Appearance="Appearance.Accent" OnClick="CreateRecipeAsync" Disabled="_recipeCreated">Save</FluentButton>
+            </FluentStack>
+        </FluentCard>            
     </FluentGridItem>
 
     <FluentGridItem xs="3">
-        <p>Right panel</p>
+        <p>Hot Bins</p>
+        @foreach (var bin in HotBins)
+        {
+            <FluentLabel>@bin.Name</FluentLabel>
+            <FluentNumberField @bind-Value="bin.Take" Label="Take" />
+        }        
     </FluentGridItem>
 </FluentGrid>

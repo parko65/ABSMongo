@@ -16,6 +16,10 @@ public class MappingProfile : Profile
 
         CreateMap<MaterialForCreationDto, Material>();
 
+        CreateMap<HotAggregateBin, HotAggregateBinDto>();
         CreateMap<HotAggregateBinForCreationDto, HotAggregateBin>();
+
+        CreateMap<BitumenTank, BitumenTankDto>();
+        CreateMap<BitumenTankForCreationDto, BitumenTank>();
     }
 }

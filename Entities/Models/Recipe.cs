@@ -20,4 +20,7 @@ public class Recipe
 
     [BsonElement("hotbins")]
     public HotAggregateBin[]? HotBins { get; set; }
+
+    [BsonElement("bitumentanks")]
+    public BitumenTank[]? BitumenTanks { get; set; }
 }

@@ -84,13 +84,9 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
         return count > 0;
     }
 
-    public async Task<long> CountAsync()
-    {
-        return await _collection.CountDocumentsAsync(_ => true);
-    }
+    public async Task<long> CountAsync() =>
+        await _collection.CountDocumentsAsync(_ => true);
 
-    public async Task<long> CountAsync(Expression<Func<T, bool>> expression)
-    {
-        return await _collection.CountDocumentsAsync(expression);
-    }
+    public async Task<long> CountAsync(Expression<Func<T, bool>> expression) =>
+        await _collection.CountDocumentsAsync(expression);
 }
