@@ -18,6 +18,9 @@ public class Recipe
     [BsonElement("version")]
     public int VersionNumber { get; set; }
 
+    [BsonElement("created")]
+    public DateTime Created { get; set; }
+
     [BsonElement("hotbins")]
     public HotAggregateBin[]? HotBins { get; set; }
 

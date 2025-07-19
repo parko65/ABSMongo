@@ -6,6 +6,7 @@
         <p>This is a simple recipe editor page.</p>
     </FluentGridItem>
 </FluentGrid>
+
 <FluentGrid AdaptiveRendering="true">
     <FluentGridItem xs="9">
         <FluentCard>
@@ -19,7 +20,7 @@
     </FluentGridItem>
 
     <FluentGridItem xs="3">
-        <p>Hot Bins</p>
+        <FluentLabel Typo="Typography.Header">Aggregates</FluentLabel>
         @foreach (var bin in HotBins)
         {
             <FluentLabel>@bin.Name</FluentLabel>

@@ -68,6 +68,7 @@ internal sealed class RecipeService : IRecipeService
         }
 
         recipe.VersionNumber = 1; // Set initial version number
+        recipe.Created = DateTime.Now; // Set creation date
 
         await _repository.Recipe.CreateRecipeAsync(recipe);
         await _repository.SaveAsync();
